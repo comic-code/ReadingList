@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Main() {
+
+  const navigation = useNavigation();
 
   const data = [
     {
@@ -38,6 +41,7 @@ export default function Main() {
                 name="add"
                 size={40}
                 color="#fff"
+                onPress={() => navigation.navigate('Book')}
               />
           </TouchableOpacity>
         </View>

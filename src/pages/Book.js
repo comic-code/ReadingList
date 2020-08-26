@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Book() {
+
+  const navigation = useNavigation();
+
   return(
     <View style={styles.container}>
       <Text style={styles.pageTitle}>Inclua seu novo livro</Text>
@@ -31,7 +35,9 @@ export default function Book() {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.cancelButton}>
+      <TouchableOpacity style={styles.cancelButton}
+        onPress={() => navigation.goBack()}
+      >
         <Text style={styles.cancelButtonText}>
           Cancelar
         </Text>
