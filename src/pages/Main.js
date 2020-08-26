@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   redLine: {
     height: '100%',
     position: 'absolute',
-    left: '10%',
+    left: 50,
     borderLeftWidth: 1,
     borderColor: '#ec7063',
   },  
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: 1,
     borderColor: '#5d6d7e',
-    paddingTop: 50,
+    paddingTop: 70,
     paddingBottom: 10,
     justifyContent: 'space-around'
   },
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'ArchitectsDaughter_400Regular',
     fontWeight: '900',
-    marginLeft: '12%'
+    marginLeft: 60
   },
 
   addButton: {
@@ -94,19 +94,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
-    marginRight: '3%'
+    marginRight: 10
   },
 
   itemButton: {
     borderBottomWidth: 1,
     borderColor: '#5d6d7e',
     paddingVertical: 10,
-    paddingLeft: '12%'
+    paddingLeft: 60
   },
 
   itemText: {
     fontSize: 20,
     fontFamily: 'ArchitectsDaughter_400Regular',
-    fontWeight: '900'
+    fontWeight: '900',
+    color: '#3b4b4b'
   }
 })
