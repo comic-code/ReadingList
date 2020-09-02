@@ -1,35 +1,22 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, AsyncStorage } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function Main() {
 
-  const navigation = useNavigation();
+  const[books, setBooks] = useState([]);
 
-  const data = [
-    {
-      id: '1',
-      title: 'Clean Code',
-      annotations: 'Livro muito bom!', 
-      read: false,
-      photo: null
-    },
-    {
-      id: '2',
-      title: 'JavaScript for dummies',
-      annotations: 'Livro muito bom!', 
-      read: false,
-      photo: null
-    },
-    {
-      id: '3',
-      title: 'Sangue suor e pixels',
-      annotations: 'Livro muito bom!', 
-      read: false,
-      photo: null
-    },
-  ]
+  useEffect(() => {
+    AsyncStorage.getItem('books').then(data => {
+      const books  = JSON.parse(data);
+
+      setBooks(books);
+    });
+
+  });
+
+  const navigation = useNavigation();
 
   return(
       <View style={styles.container}>
@@ -46,7 +33,7 @@ export default function Main() {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={data}
+          data={books}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <TouchableOpacity style={styles.itemButton}>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { AppLoading } from 'expo';
 import { useFonts, ArchitectsDaughter_400Regular,  } from '@expo-google-fonts/architects-daughter';
 
@@ -13,7 +14,10 @@ export default function App() {
     return <AppLoading />
   } else {
     return (
-        <Routes />
+        <>
+          <StatusBar backgroundColor="#F2F089" barStyle="dark-content"/>
+          <Routes />
+        </>
     );
   } 
 }

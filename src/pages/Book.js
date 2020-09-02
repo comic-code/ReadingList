@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, AsyncStorage } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -7,18 +7,71 @@ export default function Book() {
 
   const navigation = useNavigation();
 
+  const [books, setBooks] = useState([]);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [photo, setPhoto] = useState();
+  const [read, setRead] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem('books').then(data => {
+      const books = JSON.parse(data);
+
+      setBooks(books);
+    });
+  }, []);
+
+  function isValid() {
+    if(title === '' || title === null) {
+      return false;
+    } 
+    
+    return true;
+  }
+
+  async function onSave() {
+    if(isValid()) {
+      
+      const id = Math.random(5000).toString();
+
+      const data = {
+        id,
+        title,
+        description,
+        photo,
+        read
+      }
+
+      books.push(data);
+
+      await AsyncStorage.setItem('books', JSON.stringify(books));
+      navigation.goBack();
+
+    } else {
+      alert('É necessário inserir um título');
+    }
+  }
+
   return(
     <View style={styles.container}>
-      <Text style={styles.pageTitle}>Inclua seu novo livro</Text>
+      <Text style={styles.pageTitle}>Anote um novo livro</Text>
       <TextInput
         style={styles.input}
         placeholder="Título"
+        value={title}
+        onChangeText={(text) => {
+          setTitle(text);
+        }}
       />
       <TextInput
         style={styles.input}
         placeholder="Descrição"
         multiline={true}
-        numberOfLines={5}        
+        numberOfLines={5}   
+        value={description}
+        onChangeText={(text) => {
+          setDescription(text);
+        }}     
       />
 
       <TouchableOpacity style={styles.cameraButton}>
@@ -29,7 +82,10 @@ export default function Book() {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.saveButton}>
+      <TouchableOpacity
+        style={[styles.saveButton, (isValid()) ? '' : styles.saveButtonDisable]}
+        onPress={onSave}
+      >
         <Text style={styles.saveButtonText}>
           Anotar
         </Text>
@@ -81,6 +137,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignSelf: 'center',
     marginVertical: 50
+  },
+
+  saveButtonDisable:{
+    opacity: 0.5
   },
 
   saveButton: {
